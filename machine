@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+echo ADDING DOCKER REPOSITORY
+
+apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
+echo deb https://get.docker.com/ubuntu docker main > /etc/apt/sources.list.d/docker.list
+
+echo UPGRADING OS PACKAGES
+
+apt-get update
+apt-get upgrade -y
+apt-get install inotify-tools -y
+
+echo INSTALLING DOCKER
+
+apt-get install lxc-docker -y
+
+echo INSTALLING FIG
+
+curl -L https://github.com/docker/fig/releases/download/1.0.1/fig-`uname -s`-`uname -m` > /usr/local/bin/fig
+chmod +x /usr/local/bin/fig
+mkdir /opt/fig

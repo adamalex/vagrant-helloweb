@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+echo CONFIGURING DOCKER
+
+gpasswd -a vagrant docker
+
+echo CONFIGURING FIG
+
+cp /vagrant/fig.upstart.conf /etc/init/fig.conf
+ln -s /vagrant/fig.yml /opt/fig/fig.yml

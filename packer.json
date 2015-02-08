@@ -1,0 +1,43 @@
+{
+  "builders": [
+    {
+      "type": "digitalocean",
+      "image": "ubuntu-14-04-x64",
+      "snapshot_name": "helloweb-{{timestamp}}",
+      "ssh_username": "root",
+      "droplet_name": "hellowebbuild",
+      "region": "nyc3",
+      "size": "512mb"
+    }
+  ],
+  "push": {
+    "name": "adamalex/helloweb"
+  },
+  "provisioners": [
+    {
+      "type": "shell",
+      "script": "machine",
+      "pause_before": "30s"
+    },
+    {
+       "type": "file",
+       "source": "/packer/fig.yml",
+       "destination": "/opt/fig"
+    },
+    {
+      "type": "file",
+      "source": "fig.upstart.conf",
+      "destination": "/etc/init/fig.conf"
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "atlas",
+      "artifact": "adamalex/helloweb",
+      "artifact_type": "digitalocean",
+      "metadata": {
+        "created_at": "{{timestamp}}"
+      }
+    }
+  ]
+}

@@ -21,7 +21,7 @@
     },
     {
        "type": "file",
-       "source": "/packer/fig.yml",
+       "source": "fig.yml",
        "destination": "/opt/fig/fig.yml"
     },
     {
